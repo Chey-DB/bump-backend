@@ -1,20 +1,22 @@
-const client = require('./setup')
+require('dotenv').config();
+const client = require('./setup');
+const mongoose = require('mongoose');
 
-const seedDB = async () => {
-    try {
-        await client.connect()
-        console.log("Awaiting Seed 🌱")
-        await client.db('test').collection('users').drop()
-        await client.db('test').collection('users').insertMany([
-            { username: "a", password: "a"},
-            { username: "b", password: "b"},
-            { username: "c", password: "c"}
-        ])
-        console.log("DB Seeded 🌾")
-        await client.close()
-    } catch (e) {
-        console.log(e)
-    }
-}
+const seedUsers = async () => {
 
-seedDB()
+    await client();
+    console.log('Awaiting Seed 🌱');
+
+    const usersCollection = mongoose.connection.collection('users');
+    await usersCollection.deleteMany();
+    await usersCollection.insertMany([
+      { username: 'a', password: '123' },
+      { username: 'b', password: 'b' },
+      { username: 'c', password: 'c' },
+    ]);
+
+    console.log('DB Seeded 🌾');
+    mongoose.connection.close();
+};
+
+seedUsers();
