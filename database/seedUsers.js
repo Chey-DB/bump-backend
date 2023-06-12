@@ -7,13 +7,11 @@ const seedUsers = async () => {
     await client();
     console.log('Awaiting Seed 🌱');
 
-    const usersCollection = mongoose.connection.collection('users');
+    const usersCollection = mongoose.connection.collection('user');
     await usersCollection.deleteMany();
-    await usersCollection.insertMany([
-      { username: 'a', password: '123' },
-      { username: 'b', password: 'b' },
-      { username: 'c', password: 'c' },
-    ]);
+    await usersCollection.insertOne(
+      { username: 'a', password: '123' }
+    );
 
     console.log('DB Seeded 🌾');
     mongoose.connection.close();
