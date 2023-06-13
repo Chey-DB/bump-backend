@@ -1,6 +1,8 @@
 const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
+
+
 const usersRouter = require('./routes/usersRouter')
 const journalsRouter = require('./routes/journalsRouter')
 const client = require('./database/setup')
@@ -18,7 +20,8 @@ app.get('/', (req , res) => {
 })
 
 app.use('/users', usersRouter)
-
+app.use('/checklists', checklistsRouter)
 app.use('/journals', journalsRouter)
+
 
 module.exports = app
