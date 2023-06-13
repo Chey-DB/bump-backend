@@ -1,9 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const usersRouter = require("./routes/usersRouter");
-const client = require("./database/setup");
-
 const postsRouter = require("./routes/postsRouter");
+const client = require("./database/setup");
 
 client();
 

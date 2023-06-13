@@ -12,11 +12,10 @@ const index = async (req, res) => {
 
 const createPost = async (req, res) => {
   const postData = req.body;
-
   //assuming their user_id is written in the req
   //assuming all the fields are written
   try {
-    const post = await Post.create({ postData });
+    const post = await Post.create(postData);
     res.status(200).json(post);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -27,7 +26,7 @@ const updatePost = async (req, res) => {
   const { _id } = req.body;
   const updateData = req.body;
   try {
-    const post = await Post.findOneAndUpdate({ _id: _id }, { updateData });
+    const post = await Post.findOneAndUpdate({ _id: _id }, updateData);
     res.status(200).json({ update: "your file has been updated" });
   } catch (error) {
     res.status(400).json({ error: error.message });
