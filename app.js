@@ -1,6 +1,9 @@
 const express = require('express')
 const cors = require('cors')
+
+
 const usersRouter = require('./routes/usersRouter')
+const checklistsRouter = require('./routes/checklistRouter')
 const client = require('./database/setup')
 
 client()
@@ -15,5 +18,6 @@ app.get('/', (req , res) => {
 })
 
 app.use('/users', usersRouter)
+app.use('/checklists', checklistsRouter)
 
 module.exports = app
