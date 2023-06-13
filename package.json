@@ -7,7 +7,7 @@
     "dev": "nodemon index.js",
     "start": "node index.js",
     "seed": "node database/seedUsers.js",
-    "test": "jest --watchAll --verbose",
+    "test": "jest --watchAll --verbose --detectOpenHandles",
     "coverage": "jest --coverage",
     "seedJournals": "node database/seedJournals.js"
   },
