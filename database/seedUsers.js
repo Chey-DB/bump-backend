@@ -7,10 +7,10 @@ const seedUsers = async () => {
     await client();
     console.log('Awaiting Seed 🌱');
 
-    const usersCollection = mongoose.connection.collection('user');
+    const usersCollection = mongoose.connection.collection('users');
     await usersCollection.deleteMany();
     await usersCollection.insertOne(
-      { username: 'a', password: '123' }
+      {username: 'a', password: '123' }
     );
 
     console.log('DB Seeded 🌾');

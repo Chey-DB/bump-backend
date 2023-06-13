@@ -6,7 +6,6 @@ const Journal = new journalSchema({
   user_id: {
     type: String,
     required: true,
-    unique: true,
   },
   title: {
     type: String,
