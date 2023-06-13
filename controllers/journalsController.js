@@ -28,19 +28,16 @@ const create = async (req, res) => {
  
   try {
     const journal = new Journal(data);
-    const savedJournal = await journal.save();
-    res.status(201).send(savedJournal);
+    const response = await journal.save();
+    res.status(201).send(response);
   } catch (error) {
     if (error.name === 'ValidationError') {
-      const validationErrors = Object.values(error.errors).map(err => err.message);
-      res.status(400).json({ error: 'Validation Error', message: validationErrors });
+      res.status(400).json({ error: 'Validation Error', message: error.message });
     } else {
       res.status(500).json({ error: 'Server Error', message: error.message });
     }
   }
 };
-
-
 
 const update = async (req, res) => {
   const { id } = req.params;
