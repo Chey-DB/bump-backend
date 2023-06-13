@@ -5,6 +5,7 @@ const cors = require('cors')
 
 const usersRouter = require('./routes/usersRouter')
 const journalsRouter = require('./routes/journalsRouter')
+const checklistRouter = require('./routes/checklistRouter')
 const client = require('./database/setup')
 
 client()
@@ -20,7 +21,7 @@ app.get('/', (req , res) => {
 })
 
 app.use('/users', usersRouter)
-app.use('/checklists', checklistsRouter)
+app.use('/checklists', checklistRouter)
 app.use('/journals', journalsRouter)
 
 

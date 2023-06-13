@@ -9,6 +9,7 @@ const getAllChecklists = async (req, res) => {
         res.status(500).json({ error: "Failed to get all checklists" });
     }
 }
+
 const createChecklist = async (req, res) => {
     try {
         const { user_id, title, content, isCompleted } = req.body;
@@ -28,6 +29,16 @@ const getChecklistById = async (req, res) => {
         res.status(500).json({ error: "Failed to get checklist item" });
     }
 }
+
+const getChecklistsByUserId = async (req, res) => {
+    try {
+      const { user_id } = req.params;
+      const checklists = await Checklist.find({ user_id });
+      res.json(checklists);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve checklists by user ID' });
+    }
+  };
 
 const updateChecklist = async (req, res) => {
     try {
@@ -59,6 +70,7 @@ module.exports = {
     createChecklist,
     getAllChecklists,
     getChecklistById,
+    getChecklistsByUserId,
     updateChecklist,
     deleteChecklistById
 }
