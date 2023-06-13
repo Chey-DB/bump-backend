@@ -41,3 +41,24 @@ const updateChecklist = async (req, res) => {
         res.status(500).json({ error: "Failed to update checklist item" });
     }
 }
+
+const deleteChecklistById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const checklist = await Checklist.findByIdAndDelete(id);
+        if (!checklist) {
+            res.status(404).json({ error: "Checklist not found" });
+        }
+        res.status(204).json();
+    } catch (error) {
+        res.status(500).json({ error: "Failed to delete checklist item" });
+    }
+}
+
+module.exports = {
+    createChecklist,
+    getAllChecklists,
+    getChecklistById,
+    updateChecklist,
+    deleteChecklistById
+}
