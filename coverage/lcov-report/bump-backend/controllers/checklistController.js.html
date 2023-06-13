@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">48.78% </span>
+                <span class="strong">82.92% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/41</span>
+                <span class='fraction'>34/41</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">48.78% </span>
+                <span class="strong">82.92% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/41</span>
+                <span class='fraction'>34/41</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -161,10 +161,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -181,28 +181,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -255,29 +255,29 @@ const getChecklistsByUserId = <span class="fstat-no" title="function not covered
     }
   };
 &nbsp;
-const updateChecklist = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-        const { title, content, isCompleted } = <span class="cstat-no" title="statement not covered" >req.body;</span>
-        const checklist = <span class="cstat-no" title="statement not covered" >await Checklist.findByIdAndUpdate(req.params.id, { title, content, isCompleted }, { new: true });</span>
-<span class="cstat-no" title="statement not covered" >        if (!checklist) {</span>
-<span class="cstat-no" title="statement not covered" >            res.status(404).json({ error: "Checklist not found" });</span>
+const updateChecklist = async (req, res) =&gt; {
+    try {
+        const { title, content, isCompleted } = req.body;
+        const checklist = await Checklist.findByIdAndUpdate(req.params.id, { title, content, isCompleted }, { new: true });
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (!checklist) {
+            res.status(404).json({ error: "Checklist not found" });
         }
-<span class="cstat-no" title="statement not covered" >        res.json(checklist);</span>
+        res.json(checklist);
     } catch (error) {
-<span class="cstat-no" title="statement not covered" >        res.status(500).json({ error: "Failed to update checklist item" });</span>
+        res.status(500).json({ error: "Failed to update checklist item" });
     }
 }
 &nbsp;
-const deleteChecklistById = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-        const { id } = <span class="cstat-no" title="statement not covered" >req.params;</span>
-        const checklist = <span class="cstat-no" title="statement not covered" >await Checklist.findByIdAndDelete(id);</span>
-<span class="cstat-no" title="statement not covered" >        if (!checklist) {</span>
-<span class="cstat-no" title="statement not covered" >            res.status(404).json({ error: "Checklist not found" });</span>
+const deleteChecklistById = async (req, res) =&gt; {
+    try {
+        const { id } = req.params;
+        const checklist = await Checklist.findByIdAndDelete(id);
+        if (!checklist) {
+            res.status(404).json({ error: "Checklist not found" });
         }
-<span class="cstat-no" title="statement not covered" >        res.status(204).json();</span>
+        res.status(204).json();
     } catch (error) {
-<span class="cstat-no" title="statement not covered" >        res.status(500).json({ error: "Failed to delete checklist item" });</span>
+        res.status(500).json({ error: "Failed to delete checklist item" });
     }
 }
 &nbsp;
@@ -295,7 +295,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-06-13T15:10:08.862Z
+                at 2023-06-13T15:30:07.035Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

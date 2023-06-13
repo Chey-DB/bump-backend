@@ -124,18 +124,73 @@ describe('Checklist API Endpoints', () => {
         expect(response.body.isCompleted).toBe(checklist.isCompleted);
         });
     
-         // Test case for retrieving a non-existent checklist
+        // Test case for retrieving a non-existent checklist
         it('should return 404 if checklist does not exist', async () => {
-            const nonExistentId = mongoose.Types.ObjectId();
-
-            // Make a GET request to retrieve a non-existent checklist
-            const response = await request(app).get(`/checklists/${nonExistentId}`);
-
-            // Assert the response
-            expect(response.status).toBe(404);
-            expect(response.body.error).toBe('Checklist not found');
+        const nonExistentId = new mongoose.Types.ObjectId();
+    
+        // Make a GET request to retrieve a non-existent checklist
+        const response = await request(app).get(`/checklists/${nonExistentId}`);
+    
+        // Assert the response
+        expect(response.status).toBe(404);
+        expect(response.body.error).toBe('Checklist not found');
         });
+    });
+    
+    // Test PUT /checklists/:id
+    describe('PUT /checklists/:id', () => {
+        // Test case for updating a non-existent checklist
+        it('should return 404 if checklist does not exist', async () => {
+        const nonExistentId = new mongoose.Types.ObjectId();
+        const updatedChecklist = {
+            title: 'Updated Checklist',
+            content: 'Updated Content',
+            isCompleted: true,
+        };
+    
+        // Make a PUT request to update a non-existent checklist
+        const response = await request(app)
+            .put(`/checklists/${nonExistentId}`)
+            .send(updatedChecklist);
+    
+        // Assert the response
+        expect(response.status).toBe(404);
+        expect(response.body.error).toBe('Checklist not found');
+        });
+    });
+
+    // Test DELETE /checklists/:id
+    describe('DELETE /checklists/:id', () => {
+        it('should delete a checklist by ID', async () => {
+        // Create a sample checklist in the database
+        const checklist = await Checklist.create({
+            user_id: new mongoose.Types.ObjectId(),
+            title: 'Checklist 1',
+            content: 'Content 1',
+            isCompleted: false,
         });
 
+        // Make a DELETE request to delete the checklist by ID
+        const response = await request(app).delete(`/checklists/${checklist._id}`);
 
+        // Assert the response
+        expect(response.status).toBe(204);
+
+        // Check if the checklist has been deleted from the database
+        const deletedChecklist = await Checklist.findById(checklist._id);
+        expect(deletedChecklist).toBeNull();
+        });
+
+        // Test case for deleting a non-existent checklist
+        it('should return 404 if checklist does not exist', async () => {
+        const nonExistentId = new mongoose.Types.ObjectId();
+
+        // Make a DELETE request to delete a non-existent checklist
+        const response = await request(app).delete(`/checklists/${nonExistentId}`);
+
+        // Assert the response
+        expect(response.status).toBe(404);
+        expect(response.body.error).toBe('Checklist not found');
+        });
+    });
 });
