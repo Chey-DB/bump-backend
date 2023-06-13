@@ -5,7 +5,7 @@ const cors = require("cors");
 const postsRouter = require("./routes/postsRouter");
 const usersRouter = require("./routes/usersRouter");
 const journalsRouter = require("./routes/journalsRouter");
-const checklistsRouter = require("./routes/checklistRouter");
+const checklistRouter = require("./routes/checklistRouter");
 const client = require("./database/setup");
 
 client();
@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
-app.use("/checklists", checklistsRouter);
+app.use("/checklists", checklistRouter);
 app.use("/journals", journalsRouter);
 
 module.exports = app;
