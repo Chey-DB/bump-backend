@@ -9,6 +9,7 @@ router
   .post(postController.create)
   .patch(postController.update);
 
+router.route("/:id").get(postController.getById);
 router.route("/:id").delete(postController.destroy);
 
 router.route("/postonly").get(postController.getPostsOnly);
