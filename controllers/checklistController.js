@@ -1,14 +1,5 @@
 const Checklist = require("../models/Checklist");
 
-const createChecklist = async (req, res) => {
-    try {
-        const { user_id, title, content, isCompleted } = req.body;
-        const checklist = await Checklist.create({ user_id, title, content, isCompleted });
-        res.status(201).json({ checklist });
-    } catch (error) {
-        res.status(500).json({ error: "Failed to create checklist item" });
-    }
-};
 
 const getAllChecklists = async (req, res) => {
     try {
@@ -18,6 +9,15 @@ const getAllChecklists = async (req, res) => {
         res.status(500).json({ error: "Failed to get all checklists" });
     }
 }
+const createChecklist = async (req, res) => {
+    try {
+        const { user_id, title, content, isCompleted } = req.body;
+        const checklist = await Checklist.create({ user_id, title, content, isCompleted });
+        res.status(201).json({ checklist });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to create checklist item" });
+    }
+};
 
 const getChecklistById = async (req, res) => {
     try {
