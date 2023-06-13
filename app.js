@@ -4,7 +4,7 @@ const usersRouter = require("./routes/usersRouter");
 const client = require("./database/setup");
 
 const postsRouter = require("./routes/postsRouter");
-const qnaRouter = require("./routes/qnaRouters");
+
 client();
 
 const app = express();
@@ -18,6 +18,5 @@ app.get("/", (req, res) => {
 
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
-app.use("/qnas", qnaRouter);
 
 module.exports = app;
