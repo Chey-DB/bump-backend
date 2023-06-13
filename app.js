@@ -21,9 +21,7 @@ app.get('/', (req , res) => {
 
 app.use('/users', usersRouter)
 app.use('/checklists', checklistsRouter)
-
 app.use('/journals', journalsRouter)
 
-app.use('/journals', journalsRouter)
 
 module.exports = app
