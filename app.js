@@ -1,12 +1,11 @@
 const express = require("express");
-const client = require("./database/setup");
-const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 
 const postsRouter = require("./routes/postsRouter");
 const usersRouter = require("./routes/usersRouter");
 const journalsRouter = require("./routes/journalsRouter");
+const checklistsRouter = require("./routes/checklistRouter");
 const client = require("./database/setup");
 
 client();
