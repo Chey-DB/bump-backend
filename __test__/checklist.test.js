@@ -139,6 +139,40 @@ describe('Checklist API Endpoints', () => {
     
     // Test PUT /checklists/:id
     describe('PUT /checklists/:id', () => {
+        it('should update a checklist by ID', async () => {
+        // Create a sample checklist in the database
+        const checklist = await Checklist.create({
+            user_id: new mongoose.Types.ObjectId(),
+            title: 'Checklist 1',
+            content: 'Content 1',
+            isCompleted: false,
+        });
+    
+        const updatedChecklist = {
+            title: 'Updated Checklist',
+            content: 'Updated Content',
+            isCompleted: true,
+        };
+    
+        // Make a PUT request to update the checklist by ID
+        const response = await request(app)
+            .put(`/checklists/${checklist._id}`)
+            .send(updatedChecklist);
+    
+        // Assert the response
+        expect(response.status).toBe(200);
+        expect(response.body.title).toBe(updatedChecklist.title);
+        expect(response.body.content).toBe(updatedChecklist.content);
+        expect(response.body.isCompleted).toBe(updatedChecklist.isCompleted);
+    
+        // Check if the checklist has been updated in the database
+        const updatedChecklistFromDB = await Checklist.findById(checklist._id);
+        expect(updatedChecklistFromDB.title).toBe(updatedChecklist.title);
+        expect(updatedChecklistFromDB.content).toBe(updatedChecklist.content);
+        expect(updatedChecklistFromDB.isCompleted).toBe(updatedChecklist.isCompleted);
+        });
+
+
         // Test case for updating a non-existent checklist
         it('should return 404 if checklist does not exist', async () => {
         const nonExistentId = new mongoose.Types.ObjectId();
@@ -147,12 +181,12 @@ describe('Checklist API Endpoints', () => {
             content: 'Updated Content',
             isCompleted: true,
         };
-    
+
         // Make a PUT request to update a non-existent checklist
         const response = await request(app)
             .put(`/checklists/${nonExistentId}`)
             .send(updatedChecklist);
-    
+
         // Assert the response
         expect(response.status).toBe(404);
         expect(response.body.error).toBe('Checklist not found');

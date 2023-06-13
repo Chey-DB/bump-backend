@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1686670207048" clover="3.2.0">
-  <project timestamp="1686670207048" name="All files">
-    <metrics statements="151" coveredstatements="104" conditionals="12" coveredconditionals="3" methods="15" coveredmethods="6" elements="178" coveredelements="113" complexity="0" loc="151" ncloc="151" packages="5" files="11" classes="11"/>
+<coverage generated="1686672040104" clover="3.2.0">
+  <project timestamp="1686672040104" name="All files">
+    <metrics statements="151" coveredstatements="104" conditionals="12" coveredconditionals="4" methods="15" coveredmethods="6" elements="178" coveredelements="114" complexity="0" loc="151" ncloc="151" packages="5" files="11" classes="11"/>
     <package name="bump-backend">
       <metrics statements="18" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="app.js" path="/Users/georgehill/code/la_fosse_academy/LAP_4/FINAL_PROJECT/bump-backend/app.js">
@@ -27,9 +27,9 @@
       </file>
     </package>
     <package name="bump-backend.controllers">
-      <metrics statements="87" coveredstatements="44" conditionals="12" coveredconditionals="3" methods="12" coveredmethods="5"/>
+      <metrics statements="87" coveredstatements="44" conditionals="12" coveredconditionals="4" methods="12" coveredmethods="5"/>
       <file name="checklistController.js" path="/Users/georgehill/code/la_fosse_academy/LAP_4/FINAL_PROJECT/bump-backend/controllers/checklistController.js">
-        <metrics statements="41" coveredstatements="34" conditionals="4" coveredconditionals="3" methods="6" coveredmethods="5"/>
+        <metrics statements="41" coveredstatements="34" conditionals="4" coveredconditionals="4" methods="6" coveredmethods="5"/>
         <line num="1" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
@@ -55,12 +55,12 @@
         <line num="37" count="0" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
         <line num="43" count="1" type="stmt"/>
-        <line num="44" count="1" type="stmt"/>
-        <line num="45" count="1" type="stmt"/>
-        <line num="46" count="1" type="stmt"/>
-        <line num="47" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="45" count="2" type="stmt"/>
+        <line num="46" count="2" type="stmt"/>
+        <line num="47" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="48" count="1" type="stmt"/>
-        <line num="50" count="1" type="stmt"/>
+        <line num="50" count="2" type="stmt"/>
         <line num="52" count="1" type="stmt"/>
         <line num="56" count="1" type="stmt"/>
         <line num="57" count="2" type="stmt"/>
