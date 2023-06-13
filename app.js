@@ -5,6 +5,7 @@ const cors = require('cors')
 
 const usersRouter = require('./routes/usersRouter')
 const journalsRouter = require('./routes/journalsRouter')
+const checklistsRouter = require('./routes/checklistRouter')
 const client = require('./database/setup')
 
 client()
