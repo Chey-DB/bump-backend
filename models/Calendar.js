@@ -7,13 +7,16 @@ const Calendar = new Schema({
       required: false,
    },
    start: {
-      type: String
+      type: String,
+      required: true
    },
    end: {
-      type: String
+      type: String,
+      required:true
    },
    title: {
-      type: String
+      type: String,
+      required: true
    }
 });
 
