@@ -46,7 +46,7 @@ const update = async (req, res) => {
   try {
     const response = await Post.findOneAndUpdate({ _id: _id }, updateData);
     if (!response) {
-      return res
+      res
         .status(404)
         .json({ error: "Not found", message: "Post to update not found" });
     }
