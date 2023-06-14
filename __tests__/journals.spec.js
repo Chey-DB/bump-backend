@@ -53,8 +53,6 @@ describe("API endpoints", () => {
       throw new Error('Bad Request');
     });
 
-    const userId = 'testId';
-
     const response = await request(api)
       .get('/journals')
       .expect(400);
