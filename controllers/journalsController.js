@@ -70,7 +70,7 @@ const update = async (req, res) => {
     }
     res.status(200).json(response);
   } catch (error) {
-    res.status(400).json({ error: 'Bad Request', message: error.message });
+    res.status(500).json({ error: 'Bad Request', message: error.message });
   }
 };
 

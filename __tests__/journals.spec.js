@@ -47,6 +47,21 @@ describe("API endpoints", () => {
       .expect(200);
   });
 
+  it('responds with 400 for error', async () => {
+
+    jest.spyOn(Journal, 'find').mockImplementationOnce(() => {
+      throw new Error('Bad Request');
+    });
+
+    const userId = 'testId';
+
+    const response = await request(api)
+      .get('/journals')
+      .expect(400);
+
+    expect(response.body).toBeDefined();
+  });
+
   // /journal/:id endpoint testing
   it('responds to GET /journals/:id with status 200 and return the body of the entry', async () => {
 
@@ -111,17 +126,17 @@ describe("API endpoints", () => {
   });
 
   it('responds with 404 and error message for non-existing user', async () => {
-    const nonExistingUserId = '11111aa1a111a111a11aa11a';
+    const fakeId = '11111aa1a111a111a11aa11a';
 
     const response = await request(api)
-      .get(`/journals/user/${nonExistingUserId}`)
+      .get(`/journals/user/${fakeId}`)
       .expect(404);
 
     expect(response.body).toBeDefined();
     expect(response.body.message).toBe('No journal entries found');
   });
 
-  it('responds with 500 and error message for database error', async () => {
+  it('responds with 400 and error message for database error for /journal/user/:userId', async () => {
 
     jest.spyOn(Journal, 'find').mockImplementationOnce(() => {
       throw new Error('Bad Request');
@@ -164,21 +179,22 @@ describe("API endpoints", () => {
     expect(response.body.message).toBe('Journal entry not found');
   });
 
-  it('responds with 500 and error message for database error', async () => {
+  it('responds with 400 and error message for database error', async () => {
+
     jest.spyOn(Journal, 'findByIdAndDelete').mockImplementationOnce(() => {
       throw new Error('Bad Request');
     });
 
-    const journalData = {
-      user_id: 'testId',
-      title: "Test Journal",
-      content: "This is a test journal entry",
-    };
-    const journal = new Journal(journalData);
-    const savedJournal = await journal.save();
+    try {
+      const journal = new Journal(journalData);
+      const response = await journal.save();
+      journalId = response._id;
+    } catch (err) {
+      console.log(err.message);
+    }
 
     const response = await request(api)
-      .delete(`/journals/${savedJournal._id}`)
+      .delete(`/journals/${journalId}`)
       .expect(400);
 
     expect(response.body).toBeDefined();
@@ -198,6 +214,42 @@ describe("API endpoints", () => {
     expect(response.body._id).toBeDefined();
     expect(response.body.title).toBe('Test Journal');
     expect(response.body.content).toBe('This is a test journal entry');
+  });
+
+  it('responds with 400 when creating with wrong validation', async () => {
+    const nonValidData = {
+      user_id: userId,
+      content: "This is a test journal entry",
+    }; //Does not contain a title
+
+    const response = await request(api)
+      .post('/journals')
+      .send(nonValidData)
+      .expect(400);
+
+      expect(response.body).toBeDefined();
+      expect(response.body.error).toBeDefined();
+  });
+
+  it('responds with 500 and error message', async () => {
+    jest.spyOn(Journal.prototype, 'save').mockImplementationOnce(() => {
+      throw new Error(); 
+    });
+
+    const journalData = {
+      user_id: 'testId',
+      title: "Test Journal",
+      content: "This is a test journal entry",
+    };
+
+    const response = await request(api)
+      .post('/journals')
+      .send(journalData)
+      .expect(500);
+
+    expect(response.body).toBeDefined();
+    expect(response.body.error).toBe('Server Error');
+    expect(response.body.message).toBeDefined();
   });
 
   // update testing
@@ -227,4 +279,50 @@ describe("API endpoints", () => {
     expect(response.body.content).toBe('This journal entry has been updated');
   });
 
+  it('returns 404 when invalid id is used during update', async () => {
+
+    const updatedJournal = {
+      title: 'Updated Journal',
+      content: 'This journal entry has been updated',
+    };
+
+    const fakeId = '11111aa1a111a111a11aa11a'
+
+    const response = await request(api)
+      .patch(`/journals/${fakeId}`)
+      .send(updatedJournal)
+      .expect(404)
+
+    expect(response.body).toBeDefined();
+    expect(response.body.error).toBe('Not Found');
+    expect(response.body.message).toBe('Journal entry not found');
+  });
+
+  it('responds with 400 and error for updating during server error', async () => {
+    const updatedJournal = {
+      title: 'Updated Journal',
+      content: 'This journal entry has been updated',
+    };
+
+    try {
+      const journal = new Journal(journalData);
+      const response = await journal.save();
+      journalId = response._id;
+    } catch (err) {
+      console.log(err.message);
+    }
+  
+    jest.spyOn(Journal, 'findByIdAndUpdate').mockImplementationOnce(() => {
+      throw new Error('Bad Request');
+    });
+  
+    const response = await request(api)
+      .patch(`/journals/${journalId}`)
+      .send(updatedJournal)
+      .expect(500);
+  
+    expect(response.body).toBeDefined();
+    expect(response.body.error).toBe('Bad Request');
+  });
+  
 });
