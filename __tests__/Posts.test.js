@@ -2,20 +2,6 @@ const request = require("supertest");
 const app = require("../app");
 const Post = require("../models/Post");
 
-// it('responds with 400 for error', async () => {
-
-//   jest.spyOn(Journal, 'find').mockImplementationOnce(() => {
-//     throw new Error('Bad Request');
-//   });
-
-//   const userId = 'testId';
-
-//   const response = await request(api)
-//     .get('/journals')
-//     .expect(400);
-
-//   expect(response.body).toBeDefined();
-
 describe("api server", () => {
   let api;
   let postId;
@@ -40,17 +26,7 @@ describe("api server", () => {
     api.close(done);
   });
 
-  // afterEach(async () => {
-  //   if (postId) {
-  //     console.log("Cleaning up database and clear postId");
-  //     try {
-  //       await Post.findByIdAndDelete(postId);
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //   }
-  // });
-
+  //test all gets
   test("testing getting all the posts and questions", async () => {
     await request(app).get("/posts").expect(200);
   });
