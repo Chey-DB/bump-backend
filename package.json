@@ -8,7 +8,7 @@
     "start": "node index.js",
     "seed": "node database/seedUsers.js",
     "test": "jest --watchAll --verbose --detectOpenHandles",
-    "coverage": "jest --coverage",
+    "coverage": "jest --coverage --detectOpenHandles",
     "seedJournals": "node database/seedJournals.js"
   },
   "keywords": [],
