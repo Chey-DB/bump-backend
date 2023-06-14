@@ -4,8 +4,8 @@ const Calendar = require("../models/Calendar");
 const createEvent = async (req, res) => {
     try {
         const event = Calendar(req.body);
-        await event.save();
-        res.status(201).json();
+        const response = await event.save();
+        res.status(201).json(response);
     } catch (error) {
         res.status(500).json({ error: "Failed to create an event" });
     }
