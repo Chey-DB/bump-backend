@@ -2,15 +2,22 @@ const express = require('express')
 const cors = require('cors')
 const session = require('express-session')
 const passport = require('passport')
-const usersRouter = require('./routes/usersRouter')
-const client = require('./database/setup')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
+const logger = require("morgan");
 
-client()
+const client = require('./database/setup')
 
-const app = express()
+
+const postsRouter = require("./routes/postsRouter");
+const usersRouter = require("./routes/usersRouter");
+const journalsRouter = require("./routes/journalsRouter");
+const checklistRouter = require("./routes/checklistRouter");
+
+const app = express();
+client();
 
 // Middleware
+app.use(logger("dev"));
 app.use(cors())
 app.use(express.json())
 app.use(
@@ -57,11 +64,14 @@ app.get('/auth/google/callback',
   });
 
 
+app.get("/", (req, res) => {
+  res.send("hello from simple server :)");
+});
 
-app.get('/', (req , res) => {
-  res.send('hello from simple server :)')
-})
+// Routes
+app.use("/users", usersRouter);
+app.use("/posts", postsRouter);
+app.use("/checklists", checklistRouter);
+app.use("/journals", journalsRouter);
 
-app.use('/users', usersRouter)
-
-module.exports = app
+module.exports = app;
