@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 
-const checklist = mongoose.Schema({
+const ChecklistSchema = mongoose.Schema;
+
+const Checklist = new ChecklistSchema({
     user_id: {
         type:mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -20,6 +22,4 @@ const checklist = mongoose.Schema({
     }
 });
 
-const Checklist = mongoose.model("Checklist", checklist);
-
-module.exports = Checklist;
+module.exports = mongoose.model("Checklist", Checklist);
