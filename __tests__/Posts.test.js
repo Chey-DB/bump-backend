@@ -39,6 +39,7 @@ describe("api server", () => {
     await request(app).get("/posts/questiononly").expect(200);
   });
 
+  //test bad request for gets
   test("testing bad request for posts and display status code of 500", async () => {
     jest.spyOn(Post, "find").mockImplementationOnce(() => {
       throw new Error("Bad Request");
@@ -60,6 +61,7 @@ describe("api server", () => {
     await request(app).get("/posts/questiononly").expect(400);
   });
 
+  //test creating a post
   test("test creating new post and expect status code of 200", async () => {
     const response = await request(app)
       .post("/posts")
@@ -88,6 +90,7 @@ describe("api server", () => {
       .expect(500);
   });
 
+  //test updating the post
   test("testing update feature with status code of 200", async () => {
     const mockData = {
       _id: postId,
@@ -122,6 +125,7 @@ describe("api server", () => {
     expect(response.statusCode).toBe(400);
   });
 
+  //test individual posts
   test("testing if i can get one specific code with status code of 200", async () => {
     const response = await request(app).get(`/posts/${postId}`).expect(200);
   });
@@ -131,6 +135,7 @@ describe("api server", () => {
       .expect(404);
   });
 
+  //test deleting post
   test("testing if post can be deleted and respoond with the code 200", async () => {
     await request(app).delete(`/posts/${postId}`).expect(200);
   });
