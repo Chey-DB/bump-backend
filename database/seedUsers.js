@@ -9,9 +9,11 @@ const seedUsers = async () => {
 
     const usersCollection = mongoose.connection.collection('users');
     await usersCollection.deleteMany();
-    await usersCollection.insertOne(
-      {username: 'a', password: '123' }
-    );
+    await usersCollection.insertMany([
+      {username: 'dave', password: '123' },
+      {username: 'bella', password: '123' },
+      {username: 'adam', password: '123' }
+    ]);
 
     console.log('DB Seeded 🌾');
     mongoose.connection.close();
