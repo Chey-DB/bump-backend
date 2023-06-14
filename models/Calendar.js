@@ -2,10 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Calendar = new Schema({
-   id: {
+   user_id: {
       type: String,
       required: false,
-      unique:true
    },
    start: {
       type: String
