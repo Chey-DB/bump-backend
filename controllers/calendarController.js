@@ -23,5 +23,26 @@ const getEvents = async (req, res) => {
     }
 }
 
+const updateEvent = async (req, res) => {
+    
+    try {
+        const event = await Calendar.findByIdAndUpdate(req.params.id, 
+            {$set: req.body})
+        res.json(event);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to update the event" });
+    }
+};
 
-module.exports = {createEvent, getEvents}
+const deleteEvent = async (req, res) => {
+
+    try {
+        const event = await Calendar.findByIdAndRemove(req.params.id)
+        res.status(204).json();
+    } catch (error) {
+        res.status(500).json({ error: "Failed to delete the event" });
+    }
+};
+
+
+module.exports = {createEvent, getEvents, updateEvent, deleteEvent}
