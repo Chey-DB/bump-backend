@@ -12,6 +12,7 @@ const postsRouter = require("./routes/postsRouter");
 const usersRouter = require("./routes/usersRouter");
 const journalsRouter = require("./routes/journalsRouter");
 const checklistRouter = require("./routes/checklistRouter");
+const calendarRouter = require("./routes/calendarRouter")
 
 const app = express();
 client();
@@ -73,5 +74,6 @@ app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/checklists", checklistRouter);
 app.use("/journals", journalsRouter);
+app.use("/calendar", calendarRouter)
 
 module.exports = app;
