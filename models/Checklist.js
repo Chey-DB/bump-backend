@@ -4,7 +4,7 @@ const ChecklistSchema = mongoose.Schema;
 
 const Checklist = new ChecklistSchema({
     user_id: {
-        type: String,
+        type:String,
         ref: "User",
         required: true,
     },
