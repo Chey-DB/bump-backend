@@ -17,7 +17,7 @@ authRouter.get(
   }),
   (req, res) => {
     console.log("You have successfully logged in!");
-    res.redirect("http://localhost:5173/dashboard");
+    res.redirect("http://localhost:5173/loading");
   }
 );
 
@@ -34,25 +34,25 @@ authRouter.get("/logout", (req, res) => {
   });
 });
 
-// authRouter.get("/checkUser", (req, res) => {
-//   console.log(req.user);
-//   if (req.user) {
-//     res.send(req.user);
-//     } else {
-//       console.log("No user found at backend");
-//       res.send("No user found");
-//     }
-// });
-
-authRouter.get('/checkUser', (req, res) => {
-  if(req.user) {
-    // user is logged in, return some user info
-    res.send({ loggedIn: true, user: req.user });
-  } else {
-    // user is not logged in
-    res.send({ loggedIn: false });
-  }
+authRouter.get("/checkUser", (req, res) => {
+  console.log(req.user);
+  if (req.user) {
+    res.send(req.user);
+    } else {
+      console.log("No user found at backend");
+      res.send("No user found");
+    }
 });
+
+// authRouter.get('/checkUser', (req, res) => {
+//   if(req.user) {
+//     // user is logged in, return some user info
+//     res.send({ loggedIn: true, user: req.user });
+//   } else {
+//     // user is not logged in
+//     res.send({ loggedIn: false });
+//   }
+// });
 
 
 module.exports = authRouter;
