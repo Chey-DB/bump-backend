@@ -12,7 +12,6 @@ const User = new UserSchema({
     username: {
       type: String,
       lowercase: true,
-      unique: true,
       validate: {
         validator: function() {
           return this.method === 'local' ? this.local.username !== '' : true;
