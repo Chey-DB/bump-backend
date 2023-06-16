@@ -1,43 +1,90 @@
 const mongoose = require("mongoose");
 
-const UserSchema = mongoose.Schema;
+const UserSchema = mongoose.Schema
 
 const User = new UserSchema({
-  username: {
+  method: {
     type: String,
-    required: false,
-    unique: true,
-    lowercase: true,
+    enum: ['local', 'google'],
+    required: true
   },
-  password: {
-    type: String,
-    required: true,
+  local: {
+    username: {
+      type: String,
+      lowercase: true,
+      unique: true,
+      validate: {
+        validator: function() {
+          return this.method === 'local' ? this.local.username !== '' : true;
+        },
+        message: 'Username required for local method'
+      }
+    },
+    password: {
+      type: String,
+      validate: {
+        validator: function() {
+          return this.method === 'local' ? this.local.password !== '' : true;
+        },
+        message: 'Password required'
+      }
+    },
+    profilePic: {
+          type: String,
+          required: false,
+        },
+        dueDate: {
+          type: Date,
+          required: false,
+        },
+        currentWeek: {
+          type: Number,
+          required: false,
+        },
+        about: {
+          type: String,
+          required: false,
+        }
   },
-  googleId: {
-    type: String,
-    required: false,
-  },
-  googleUsername: {
-    type: String,
-    required: false,
-  },
-  profilePic: {
-    type: String,
-    required: false,
-  },
-  dueDate: {
-    type: Date,
-    required: false,
-  },
-  currentWeek: {
-    type: Number,
-    required: false,
-  },
-  about: {
-    type: String,
-    required: false,
-  },
+  google: {
+    id: {
+      type: String,
+      validate: {
+        validator: function() {
+          return this.method === 'google' ? this.google.id !== '' : true;
+        },
+        message: 'Google id required'
+      }
+    },
+    username: {
+      type: String,
+      lowercase: true,
+      validate: {
+        validator: function() {
+          return this.method === 'google' ? this.google.givenName !== '' : true;
+        },
+        message: 'Username required for google method'
+      }
+    },
+    profilePic: {
+          type: String,
+          required: false,
+        },
+        dueDate: {
+          type: Date,
+          required: false,
+        },
+        currentWeek: {
+          type: Number,
+          required: false,
+        },
+        about: {
+          type: String,
+          required: false,
+        }
+  }
 });
+
 
 module.exports = mongoose.model("User", User);
 
