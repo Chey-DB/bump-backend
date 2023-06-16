@@ -1,8 +1,20 @@
 const request = require("supertest");
 const app = require("../app");
+const Post = require("../models/Post");
 
 describe("api server", () => {
   let api;
+  let postId;
+
+  const mockData = {
+    user_id: "testin",
+    title: "testing_title",
+    content: "testing_content",
+    image: "testing_image",
+    comments: ["testin with no g"],
+    question: true,
+  };
+
   beforeAll(() => {
     api = app.listen(3000, () => {
       console.log("Test server running on port 3000");
@@ -14,73 +26,80 @@ describe("api server", () => {
     api.close(done);
   });
 
+  //test all gets
   test("testing getting all the posts and questions", async () => {
     await request(app).get("/posts").expect(200);
   });
+
   test("testing getting all the posts only ", async () => {
     await request(app).get("/posts/postonly").expect(200);
   });
+
   test("testing getting all the questions only ", async () => {
     await request(app).get("/posts/questiononly").expect(200);
   });
 
-  test("test creating new post", async () => {
-    const mockData = {
-      user_id: "testin",
-      title: "testing_title",
-      content: "testing_content",
-      image: "testing_image",
-      comments: ["testin with no g"],
-      question: true,
-    };
-    await request(app)
+  //test bad request for gets
+  test("testing bad request for posts and display status code of 500", async () => {
+    jest.spyOn(Post, "find").mockImplementationOnce(() => {
+      throw new Error("Bad Request");
+    });
+    await request(app).get("/posts").expect(400);
+  });
+
+  test("testing bad request for postsonly and display status code of 400", async () => {
+    jest.spyOn(Post, "find").mockImplementationOnce(() => {
+      throw new Error("Bad Request");
+    });
+    await request(app).get("/posts/postonly").expect(400);
+  });
+
+  test("testing bad request for question only and display status code of 400", async () => {
+    jest.spyOn(Post, "find").mockImplementationOnce(() => {
+      throw new Error("Bad Request");
+    });
+    await request(app).get("/posts/questiononly").expect(400);
+  });
+
+  //test creating a post
+  test("test creating new post and expect status code of 200", async () => {
+    const response = await request(app)
       .post("/posts")
       .send(mockData)
       .set("Accept", "application/json")
       .expect(200);
+    postId = response.body._id;
+    console.log(postId);
   });
 
-  test("bad request testing for creating a new post", async () => {
-    const mockData = {
-      user_ids: "testin",
-      title: "testing_title",
-      content: "testing_content",
-      image: "testing_image",
-      comments: ["testin with no g"],
-      question: true,
-    };
-    await request(app)
+  test("bad request testing for creating a new post with status code of 400", async () => {
+    const response = await request(app)
       .post("/posts")
-      .send(mockData)
+      .send({ user_ids: 11 })
       .set("Accept", "application/json")
       .expect(400);
   });
-
-  test("bad request testing for creating a new post", async () => {
-    const mockData = {
-      user_ids: "testin",
-      title: "testing_title",
-      content: "testing_content",
-      image: "testing_image",
-      comments: ["testin with no g"],
-      question: true,
-    };
-    await request(app)
+  test("bad request testing for creating a new post with status code of 500", async () => {
+    jest.spyOn(Post, "create").mockImplementationOnce(() => {
+      throw new Error("Bad Request");
+    });
+    const response = await request(app)
       .post("/posts")
-      .send(mockData)
+      .send("hi")
       .set("Accept", "application/json")
-      .expect(400);
+      .expect(500);
   });
 
+  //test updating the post
   test("testing update feature with status code of 200", async () => {
     const mockData = {
-      _id: "64887372acecd8bab23fc832",
-      user_id: "testin",
-      title: "testing_title",
-      content: "testing_content",
-      image: "testing_image",
-      comments: ["testin with no g"],
-      question: true,
+      _id: postId,
+      user_id: "update_testin",
+      title: "upadate_testing_title",
+      content: "update_testing_content",
+      image: "update_testing_image",
+      comments: ["update_testin with no g"],
+      question: false,
     };
     const response = await request(app)
       .patch("/posts")
@@ -104,34 +123,23 @@ describe("api server", () => {
       .set("Accept", "application/json");
 
     expect(response.statusCode).toBe(400);
-    console.log(response.statusCode);
   });
 
+  //test individual posts
   test("testing if i can get one specific code with status code of 200", async () => {
-    const mockData = {
-      _id: "64887372acecd8bab23fc832",
-      user_id: "testin",
-      title: "testing_title",
-      content: "testing_content",
-      image: "testing_image",
-      comments: ["testin with no g"],
-      question: true,
-    };
+    const response = await request(app).get(`/posts/${postId}`).expect(200);
+  });
+  test("testing if i can get one specific code with status code of 404", async () => {
     const response = await request(app)
-      .get(`/posts/${mockData._id}`)
-      .expect(200);
+      .get("/posts/id_that_does_not_exists")
+      .expect(404);
   });
 
+  //test deleting post
   test("testing if post can be deleted and respoond with the code 200", async () => {
-    const mockData = {
-      _id: "64887372acecd8bab23fc832",
-      user_id: "testin",
-      title: "testing_title",
-      content: "testing_content",
-      image: "testing_image",
-      comments: ["testin with no g"],
-      question: true,
-    };
-    await request(app).delete(`/posts/${mockData._id}`).expect(200);
+    await request(app).delete(`/posts/${postId}`).expect(200);
+  });
+  test("testing if post with the wrong id is sent and respoond with the code 404", async () => {
+    await request(app).delete(`/posts/111`).expect(404);
   });
 });
