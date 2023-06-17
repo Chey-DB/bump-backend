@@ -8,7 +8,7 @@ const client = require("./database/setup");
 
 const authRouter = require("./routes/authRouter");
 const postsRouter = require("./routes/postsRouter");
-const usersRouter = require("./routes/usersRouter");
+const googleUsersRouter = require("./routes/googleUsersRouter");
 const journalsRouter = require("./routes/journalsRouter");
 const checklistRouter = require("./routes/checklistRouter");
 const calendarRouter = require("./routes/calendarRouter")
@@ -46,7 +46,7 @@ app.use(passport.session());
 
 // Routes
 app.use("/auth", authRouter);
-app.use("/users", usersRouter);
+app.use("/users", googleUsersRouter);
 app.use("/posts", postsRouter);
 app.use("/checklists", checklistRouter);
 app.use("/journals", journalsRouter);
