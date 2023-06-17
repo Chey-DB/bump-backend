@@ -2,43 +2,12 @@ const mongoose = require("mongoose");
 
 const UserSchema = mongoose.Schema
 
-const User = new UserSchema({
-  method: {
-    type: String,
-    enum: ['local', 'google'],
-    required: true
-  },
-  local: {
+const LocalUser = new UserSchema({
     username: {
       type: String,
-      lowercase: true,
     },
     password: {
       type: String,
-    },
-    profilePic: {
-      type: String,
-      required: false,
-    },
-    dueDate: {
-      type: Date,
-      required: false,
-    },
-    currentWeek: {
-      type: Number,
-      required: false,
-    },
-    about: {
-      type: String,
-      required: false,
-    }
-  },
-  google: {
-    id: {
-      type: String,
-    },
-    username: {
-      type: String,
       lowercase: true,
     },
     profilePic: {
@@ -58,18 +27,9 @@ const User = new UserSchema({
       required: false,
     }
   }
-});
+);
 
-User.pre('save', function(next) {
-  if (this.method === 'google') {
-    this.local = undefined;
-  } else if (this.method === 'local') {
-    this.google = undefined;
-  }
-  next();
-});
-
-module.exports = mongoose.model("User", User);
+module.exports = mongoose.model("LocalUser", LocalUser);
 
 
 // const User = new UserSchema({
