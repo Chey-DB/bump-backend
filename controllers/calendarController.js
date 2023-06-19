@@ -21,6 +21,16 @@ const getEvents = async (req, res) => {
     }
 }
 
+const getEventByUserId = async (req, res) => {
+    try {
+      const { user_id } = req.params;
+      const event = await Calendar.find({ user_id });
+      res.json(event);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve Event by user ID' });
+    }
+  };
+
 const updateEvent = async (req, res) => {
     
     try {
@@ -43,4 +53,4 @@ const deleteEvent = async (req, res) => {
 };
 
 
-module.exports = {createEvent, getEvents, updateEvent, deleteEvent}
+module.exports = {createEvent, getEvents, updateEvent, deleteEvent, getEventByUserId}
