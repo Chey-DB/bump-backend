@@ -46,7 +46,8 @@ app.use(passport.session());
 
 // Routes
 app.use("/auth", authRouter);
-app.use("/users", googleUsersRouter);
+app.use("/local-users", authRouter);
+app.use("/google-users", googleUsersRouter);
 app.use("/posts", postsRouter);
 app.use("/checklists", checklistRouter);
 app.use("/journals", journalsRouter);

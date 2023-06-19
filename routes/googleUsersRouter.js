@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const usersController = require('../controllers/googleUserController');
+const googleUsersController = require('../controllers/googleUserController');
 
 const googleUsersRouter = router;
 
-googleUsersRouter.get('/', usersController.index);
+googleUsersRouter.get('/', googleUsersController.index);
 
 module.exports = googleUsersRouter;
 
