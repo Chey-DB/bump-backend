@@ -33,7 +33,7 @@ const getChecklistById = async (req, res) => {
 const getChecklistsByUserId = async (req, res) => {
     try {
       const { user_id } = req.params;
-      const checklists = await Checklist.find({ user_id });
+      const checklists = await Checklist.find({ user_id: user_id });
       res.json(checklists);
     } catch (error) {
       res.status(500).json({ error: 'Failed to retrieve checklists by user ID' });
