@@ -1,4 +1,7 @@
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcryptjs");
+const LocalUser = require("../models/LocalUser");
 const mongoose = require("mongoose");
 const GoogleUser = require("../models/GoogleUser");
 
@@ -45,4 +48,43 @@ module.exports = function (passport) {
     }
   });
   
-};
+},
+
+function (passport) {
+
+  passport.use(
+    new LocalStrategy((username, password, done) => {
+      LocalUser.findOne({ username: username }, (err, localUser) => {
+        if (err) {
+          return done(err);
+        }
+        if (!localUser) {
+          return done(null, false, { message: "Incorrect credentials" });
+        }
+        bcrypt.compare(password, localUser.password, (err, res) => {
+          if (err) {
+            return done(err);
+          }
+          if (res) {
+            return done(null, localUser);
+          } else {
+            return done(null, false, { message: "Incorrect credentials" });
+          }
+        });
+      });
+    })
+  );
+
+  passport.serializeUser((localUser, done) => {
+    done(null, localUser.id);
+  });
+
+  passport.deserializeUser((id, done) => {
+    LocalUser.findById(id, (err, localUser) => {
+      done(err, localUser);
+    });
+  });
+}
+
+
+
