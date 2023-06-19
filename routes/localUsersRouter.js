@@ -21,7 +21,7 @@ localUsersRouter.post('/login', (req, res) => {
             }
             return res.status(200).json({ message: 'You have successfully logged in!' });
         });
-    })
+    })(req, res)
 });
 
 
