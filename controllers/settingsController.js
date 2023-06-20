@@ -11,12 +11,13 @@ const index = async (req, res) => {
 
 const show = async (req, res) => {
     try {
-        const userSettings = await Settings.findById(req.user._id);
+        const userSettings = await Settings.findOne({ user_id: req.params.id });
         res.json(userSettings);
     } catch (error) {
         res.status(500).json({ error: "Failed to get settings item" });
     }
 }
+
 
 const create = async (req, res) => {
     console.log(req.user);
