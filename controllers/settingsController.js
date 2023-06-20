@@ -19,10 +19,13 @@ const show = async (req, res) => {
 }
 
 const create = async (req, res) => {
-    req.user._id = user_id;
+    console.log(req.user);
+    console.log("are you here?");
+    user_id = req.user._id;
     try {
-        const { user_id, title, content, isCompleted } = req.body;
-        const settings = await Settings.create({ user_id, title, content, isCompleted });
+        const { name, addressLine1, addressLine2, city, postcode, currentWeek, dueDate, relationshipStatus, about } = req.body;
+        console.log(req.body);
+        const settings = await Settings.create({ user_id, name, addressLine1, addressLine2, city, postcode, currentWeek, dueDate, relationshipStatus, about });
         res.status(201).json({ settings });
     } catch (error) {
         res.status(500).json({ error: "Failed to create settings item" });
