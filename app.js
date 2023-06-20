@@ -9,6 +9,8 @@ const client = require("./database/setup");
 const authRouter = require("./routes/authRouter");
 const postsRouter = require("./routes/postsRouter");
 const googleUsersRouter = require("./routes/googleUsersRouter");
+const localUsersRouter = require("./routes/localUsersRouter");
+const settingsRouter = require("./routes/settingsRouter");
 const journalsRouter = require("./routes/journalsRouter");
 const checklistRouter = require("./routes/checklistRouter");
 const calendarRouter = require("./routes/calendarRouter")
@@ -46,8 +48,9 @@ app.use(passport.session());
 
 // Routes
 app.use("/auth", authRouter);
-app.use("/local-users", authRouter);
 app.use("/google-users", googleUsersRouter);
+app.use("/local-users", localUsersRouter);
+app.use("/settings", settingsRouter);
 app.use("/posts", postsRouter);
 app.use("/checklists", checklistRouter);
 app.use("/journals", journalsRouter);

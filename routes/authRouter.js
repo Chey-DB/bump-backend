@@ -17,7 +17,7 @@ authRouter.get(
   }),
   (req, res) => {
     console.log("You have successfully logged in!");
-    res.redirect("http://localhost:5173/loading");
+    res.redirect("http://localhost:5173/settings");
   }
 );
 
