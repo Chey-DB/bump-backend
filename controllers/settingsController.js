@@ -21,7 +21,6 @@ const show = async (req, res) => {
 
 const create = async (req, res) => {
     console.log(req.user);
-    console.log("are you here?");
     user_id = req.user._id;
     try {
         const { name, addressLine1, addressLine2, city, postcode, currentWeek, dueDate, relationshipStatus, about } = req.body;
