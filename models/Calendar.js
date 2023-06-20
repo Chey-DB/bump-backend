@@ -3,8 +3,9 @@ const Schema = mongoose.Schema;
 
 const Calendar = new Schema({
    user_id: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'User',
+      required: false,
    },
    start: {
       type: String,
