@@ -19,6 +19,7 @@
 #     print(p.text)
 from bs4 import BeautifulSoup
 from selenium import webdriver
+import json
 
 url = "https://parade.com/971665/marynliles/pregnancy-quotes/"
 
@@ -48,6 +49,12 @@ for p in p_tags:
 
 # Print the quotes
 formatted_quotes = raw_quotes[4:]
-print(formatted_quotes)
+
+json_data = json.dumps(formatted_quotes)
+
+with open('quotes.json', 'w') as json_file:
+    json_file.write(json_data)
+
+
 
 
