@@ -39,15 +39,15 @@ soup = BeautifulSoup(html, 'html.parser')
 # Get all the p tags
 p_tags = soup.find_all('p')
 
-quotes = []
+raw_quotes = []
 
 # Get the text from each p tag and strip surrounding whitespace
 for p in p_tags:
     quote_text = p.get_text(separator=" ", strip=True)
-    quotes.append(quote_text)
+    raw_quotes.append(quote_text)
 
 # Print the quotes
-print(quotes)
-
+formatted_quotes = raw_quotes[4:]
+print(formatted_quotes)
 
 
