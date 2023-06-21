@@ -47,6 +47,13 @@ const update = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+const addToArray = async (req, res) => {
+  const { _id } = req.body;
+  const { username, comment } = req.body;
+  try {
+    await Post.updateOne({ _id }, { $push: { comments: [username, comment] } });
+  } catch (error) {}
+};
 
 const destroy = async (req, res) => {
   const id = req.params.id;
@@ -84,4 +91,5 @@ module.exports = {
   destroy,
   getPostsOnly,
   getQuestionsOnly,
+  addToArray,
 };
