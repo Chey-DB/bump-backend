@@ -33,7 +33,7 @@ authRouter.get("/logout", (req, res) => {
   req.logout((err) => {
     console.log("You have successfully logged out!");
     console.log(req.session, req.user);
-
+    res.status(200).send(req.session)
     if (err) {
       return next(err);
     }
