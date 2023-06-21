@@ -4,6 +4,7 @@ const Calendar = require("../models/Calendar");
 const createEvent = async (req, res) => {
     try {
         const event = Calendar(req.body);
+        console.log(event)
         const response = await event.save();
         res.status(201).json(response);
     } catch (error) {
