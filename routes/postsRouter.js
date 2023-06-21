@@ -6,7 +6,7 @@ const router = Router();
 router
   .route("/")
   .get(postController.index)
-  .post(postController.create)
+  .post(postController.addToArray)
   .patch(postController.update);
 
 router.route("/postonly").get(postController.getPostsOnly);

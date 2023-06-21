@@ -1,4 +1,7 @@
+const Settings = require("../models/Settings");
+
 const passport = require("passport");
+
 
 const router = require("express").Router();
 
@@ -15,8 +18,12 @@ authRouter.get(
   passport.authenticate("google", {
     failureRedirect: "http://localhost:5173/register",
   }),
-  (req, res) => {
+  async (req, res) => {
     console.log("You have successfully logged in!");
+    const userSettings = await Settings.findOne({ user_id: req.user._id });
+    if (userSettings) {
+      res.redirect("http://localhost:5173/dashboard");
+    } else
     res.redirect("http://localhost:5173/settings");
   }
 );
@@ -36,6 +43,8 @@ authRouter.get("/logout", (req, res) => {
 
 authRouter.get("/checkUser", (req, res) => {
   console.log(req.user);
+  const user = req.session.passport.user
+  console.log(user);
   if (req.user) {
     res.send(req.user);
     } else {
