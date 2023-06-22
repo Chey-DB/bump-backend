@@ -6,11 +6,12 @@ const router = Router();
 router
   .route("/")
   .get(postController.index)
-  .post(postController.addToArray)
+  .post(postController.create)
   .patch(postController.update);
 
 router.route("/postonly").get(postController.getPostsOnly);
 router.route("/questiononly").get(postController.getQuestionsOnly);
+router.route("/comments").post(postController.addToArray);
 router.route("/:id").get(postController.getById);
 router.route("/:id").delete(postController.destroy);
 
