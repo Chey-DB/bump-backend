@@ -10,7 +10,8 @@
     "test": "jest --watchAll --verbose --detectOpenHandles",
     "coverage": "jest --coverage --detectOpenHandles",
     "seedJournals": "node database/seedJournals.js",
-    "seedChecklist": "node database/seedChecklist.js"
+    "seedChecklist": "node database/seedChecklist.js",
+    "seedQuotes": "node database/seedQuotes.js"
   },
   "keywords": [],
   "author": "",

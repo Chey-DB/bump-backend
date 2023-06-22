@@ -16,6 +16,7 @@ const settingsRouter = require("./routes/settingsRouter");
 const journalsRouter = require("./routes/journalsRouter");
 const checklistRouter = require("./routes/checklistRouter");
 const calendarRouter = require("./routes/calendarRouter");
+const quotesRouter = require("./routes/quotesRouter");
 
 require("./config/passport")(passport);
 
@@ -60,6 +61,7 @@ app.use("/posts", postsRouter);
 app.use("/checklists", checklistRouter);
 app.use("/journals", journalsRouter);
 app.use("/calendar", calendarRouter);
+app.use("/quotes", quotesRouter);
 
 app.get("/", (req, res) => {
   res.send("hello from simple server :)");
