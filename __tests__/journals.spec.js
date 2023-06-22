@@ -53,8 +53,6 @@ describe("API endpoints", () => {
       throw new Error('Bad Request');
     });
 
-    const userId = 'testId';
-
     const response = await request(api)
       .get('/journals')
       .expect(400);
@@ -210,6 +208,7 @@ describe("API endpoints", () => {
       .send(journalData)
       .expect(201);
 
+    journalId = response.body._id
     expect(response.body).toBeDefined();
     expect(response.body._id).toBeDefined();
     expect(response.body.title).toBe('Test Journal');

@@ -16,7 +16,10 @@ const createEvent = async (req, res) => {
 const getEvents = async (req, res) => {
     try {
         const events = await Calendar.find({})
-        res.send(events)
+        if (events.length === 0) {
+            return res.status(404).json({ error: 'Not Found', message: 'No journal entries found' });
+          }
+          res.status(200).json(events);
     } catch (error) {
         res.status(500).json({ error: "Failed to view all events" });
     }
@@ -24,9 +27,13 @@ const getEvents = async (req, res) => {
 
 const getEventByUserId = async (req, res) => {
     try {
-      const user_id  = req.user._id;
+        const user_id  = req.user._id;
+        console.log(user_id)
       const event = await Calendar.find({ user_id });
-      res.json(event);
+      if (event.length === 0) {
+        return res.status(404).json({ error: 'Not Found', message: 'No journal entries found' });
+      }
+      res.status(200).json(event);
     } catch (error) {
       res.status(500).json({ error: 'Failed to retrieve Event by user ID' });
     }
