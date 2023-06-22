@@ -4,8 +4,9 @@ const SettingsSchema = mongoose.Schema
 
 const Settings = new SettingsSchema({
     user_id: {
-        type: String,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        required: false,
     },
     name: {
         type: String,
