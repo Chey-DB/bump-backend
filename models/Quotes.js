@@ -4,7 +4,7 @@ const QuotesSchema = mongoose.Schema
 
 const Quotes = new QuotesSchema({
     quote: {
-        type: list,
+        type: Array,
         required: true,
     }});
 
