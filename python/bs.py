@@ -1,30 +1,10 @@
-# import requests
-# from bs4 import BeautifulSoup
-
-# url = "https://parade.com/971665/marynliles/pregnancy-quotes/"
-# response = requests.get(url)
-# soup = BeautifulSoup(response.text, "html.parser")
-# print(soup.prettify())
-
-# import requests
-# from bs4 import BeautifulSoup
-
-# url = "https://parade.com/971665/marynliles/pregnancy-quotes/"
-# response = requests.get(url)
-# soup = BeautifulSoup(response.text, "html.parser")
-
-# p_tags = soup.find_all('p')
-
-# for p in p_tags:
-#     print(p.text)
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import json
 
 url = "https://parade.com/971665/marynliles/pregnancy-quotes/"
 
-# Path to the downloaded ChromeDriver
-path_to_chromedriver = r"C:\Users\cheyd\Downloads\chromedriver_win32 (1)\chromedriver.exe" # change path as needed
+# Create a new Chrome session
 browser = webdriver.Chrome()
 
 # Load the webpage
