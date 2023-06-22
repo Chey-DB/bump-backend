@@ -6,8 +6,12 @@ const index = async (req, res) => {
 };
 
 const show = async (req, res) => {
-  const googleUser = await GoogleUser.findById(req.params.id);
-  res.json(googleUser);
+  try {
+    const googleUser = await GoogleUser.findById(req.params.id);
+    res.status(200).json(googleUser);
+  } catch (error) {
+    res.status(404).json({ error: "User not found" });
+  }
 };
 
 const create = async (req, res) => {
