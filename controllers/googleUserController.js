@@ -1,4 +1,4 @@
-const User = require("../models/GoogleUser");
+const GoogleUser = require("../models/GoogleUser");
 
 const index = async (req, res) => {
     const googleUsers = await GoogleUser.find({});
