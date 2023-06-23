@@ -16,15 +16,15 @@ authRouter.get(
 authRouter.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:5173/register",
+    failureRedirect: "https://bump-kwkn.onrender.com/register",
   }),
   async (req, res) => {
     console.log("You have successfully logged in!");
     const userSettings = await Settings.findOne({ user_id: req.user._id });
     if (userSettings) {
-      res.redirect("http://localhost:5173/loading");
+      res.redirect("https://bump-kwkn.onrender.com/loading");
     } else
-    res.redirect("http://localhost:5173/settings");
+    res.redirect("https://bump-kwkn.onrender.com/settings");
   }
 );
 
