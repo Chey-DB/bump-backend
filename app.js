@@ -27,7 +27,7 @@ client();
 app.use(logger("dev"));
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://bump-kwkn.onrender.com",
     credentials: true,
   })
 );
