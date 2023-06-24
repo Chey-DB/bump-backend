@@ -15,10 +15,7 @@ describe("API endpoints", () => {
     });
   });
 
-  afterAll((done) => {
-    console.log("Stopping tests");
-    api.close(done);
-  });
+  
 
   afterEach(async () => {
     if (calendarId) {
@@ -26,7 +23,7 @@ describe("API endpoints", () => {
       try {
         await Calendar.findByIdAndDelete(calendarID);
         console.log("Test Calendar event entry deleted");
-        calendarID = "";
+        calendarId = "";
       } catch (err) {
         console.error(err.message);
       }
@@ -35,7 +32,7 @@ describe("API endpoints", () => {
 
   //Get all avents test
     it("It responds with 200 with all events", async () => {
-      await request(app).get("/calendar").expect(200);
+      await request(api).get("/calendar").expect(200);
     });
 
     //Error handling when getting all events
@@ -55,8 +52,9 @@ describe("API endpoints", () => {
         const calendarData = {
             user_id: "test",
             title: "Baby scan",
-            start: "18/06/2023",
-            end: "18/06/2023"
+            date: "18/06/2023",
+            time: "07:58",
+            description: "test purpose"
         }
       
         const response = await request(api)
@@ -71,10 +69,11 @@ describe("API endpoints", () => {
     it("should return 500 if required fields are missing", async () => {
       const invalidEvent = {
         user_id: "",
-        start: "",
-        end: "18/06/2023",
-        title: "Missing title"
-      }
+        date: "18/06/2023",
+        time: "",
+        title: "Missing title",
+        description: "",
+      };
 
       // Make a POST request to create a new event with missing required fields
       const response = await request(app).post("/calendar").send(invalidEvent);
@@ -83,5 +82,10 @@ describe("API endpoints", () => {
       // expect(response.status);
       expect(response.status).toBe(500);
       expect(response.body.error).toBe("Failed to create an event");
+    });
+
+    afterAll((done) => {
+      console.log("Stopping tests");
+      api.close(done);
     });
 });

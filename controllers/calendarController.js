@@ -2,7 +2,7 @@ const Calendar = require("../models/Calendar");
 
 
 const createEvent = async (req, res) => {
-    const user_id = req.user._id
+    const user_id = req.body.user_id;
     try {
         const {date, time, title, description} = req.body;
         const event = await Calendar.create({date, time, title, description, user_id});

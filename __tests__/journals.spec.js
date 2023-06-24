@@ -6,7 +6,7 @@ describe("API endpoints", () => {
   let api;
   let journalId;
   let userId = 'testId'
-  const port = 4000;
+  const port = 3000;
 
   const journalData = {
     user_id: userId,
